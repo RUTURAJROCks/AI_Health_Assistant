@@ -8,7 +8,7 @@ genai.configure(api_key=apikey)
 
 st.set_page_config(page_title="Vital Image Analytics", layout="wide", page_icon="🤖")
 
-st.image("/Users/ruturaj/Desktop/Shield2/healtho.jpg", width=200)
+st.image("healtho.jpg", width=200)
 st.title("Vital Image Analytics")
 st.subheader("AI-Powered Medical Image Analysis")
 
