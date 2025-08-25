@@ -1,0 +1,29 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Streamlit cache
+.streamlit/
+
+# Mac system files
+.DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Large data files (if not needed in repo)
+*.json
+*.csv
+*.tsv
+*.xlsx
