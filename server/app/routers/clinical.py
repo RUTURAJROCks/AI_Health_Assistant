@@ -1,9 +1,10 @@
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
 from app.services.gemini import analyze_medical_image, compile_soap_note, get_text_embedding
 from app.services.db import db_client
+from app.services.limiter import rate_limit_chat
 
 router = APIRouter(
     prefix="/api/clinical",
@@ -18,7 +19,7 @@ class SOAPRequestModel(BaseModel):
     rag_query: Optional[str] = Field(None, description="Optional vector database search query. Defaults to HPI if omitted.")
 
 
-@router.post("/analyze-image")
+@router.post("/analyze-image", dependencies=[Depends(rate_limit_chat)])
 async def analyze_scan(
     file: UploadFile = File(...),
     prompt: Optional[str] = Form(None)
@@ -53,7 +54,7 @@ async def analyze_scan(
         raise HTTPException(status_code=500, detail=f"Diagnostic visual study failed: {str(e)}")
 
 
-@router.post("/compile-soap")
+@router.post("/compile-soap", dependencies=[Depends(rate_limit_chat)])
 async def compile_patient_case(body: SOAPRequestModel):
     """
     Compiles patient history, visual findings, and contextually matching guidelines

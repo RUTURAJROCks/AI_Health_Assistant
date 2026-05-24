@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import List, Optional
 
@@ -6,6 +6,7 @@ from app.config import settings
 from app.services.parser import parse_document, chunk_document
 from app.services.gemini import get_text_embedding, get_text_embeddings_batch, generate_rag_chat
 from app.services.db import db_client
+from app.services.limiter import rate_limit_upload, rate_limit_chat
 
 router = APIRouter(
     prefix="/api/rag",
@@ -17,7 +18,7 @@ class QueryModel(BaseModel):
     question: str = Field(..., description="The medical/pharmaceutical query to search for.")
     top_k: int = Field(default=4, ge=1, le=10, description="Number of context matches to retrieve.")
 
-@router.post("/upload")
+@router.post("/upload", dependencies=[Depends(rate_limit_upload)])
 async def upload_document(file: UploadFile = File(...)):
     """
     Ingests, recursively chunks, vectorizes (text-embedding-004),
@@ -26,12 +27,12 @@ async def upload_document(file: UploadFile = File(...)):
     try:
         file_bytes = await file.read()
         
-        # Enforce maximum upload size (default 10MB)
+        # Enforce maximum upload size (default 5MB)
         max_bytes = settings.max_upload_mb * 1024 * 1024
         if len(file_bytes) > max_bytes:
             raise HTTPException(
                 status_code=413,
-                detail=f"File too large. Maximum upload size is {settings.max_upload_mb}MB."
+                detail=f"File too large. Maximum upload size is {settings.max_upload_mb}MB. Please try uploading a smaller file."
             )
         
         # 1. Parse document content based on extension
@@ -79,7 +80,7 @@ async def delete_document(file_name: str):
         raise HTTPException(status_code=500, detail=f"Failed to delete document: {str(e)}")
 
 
-@router.post("/query")
+@router.post("/query", dependencies=[Depends(rate_limit_chat)])
 async def query_knowledge_base(body: QueryModel):
     """
     Performs similarity vector query on ChromaDB and returns a

@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
     frontend_url: str = "http://localhost:5173"
-    max_upload_mb: int = 10
+    max_upload_mb: int = 5
 
     # Pydantic v2 settings configuration config loading .env
     model_config = SettingsConfigDict(
