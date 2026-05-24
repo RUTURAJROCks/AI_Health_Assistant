@@ -1588,6 +1588,7 @@ export default function App() {
                       className="input-field"
                       style={{ 
                         flex: 1, 
+                        minWidth: 0,
                         cursor: 'pointer', 
                         display: 'flex', 
                         alignItems: 'center', 
@@ -1596,10 +1597,23 @@ export default function App() {
                         color: selectedFile ? 'var(--text-primary)' : 'var(--text-muted)',
                         backgroundColor: 'var(--bg-primary)',
                         border: '1px solid var(--border-color)',
-                        borderRadius: 'var(--border-radius-md)'
+                        borderRadius: 'var(--border-radius-md)',
+                        overflow: 'hidden'
                       }}
                     >
-                      <span>{selectedFile ? selectedFile.name : "Select a guideline document (PDF, TXT, DOCX)..."}</span>
+                      <span 
+                        style={{ 
+                          whiteSpace: 'nowrap', 
+                          overflow: 'hidden', 
+                          textOverflow: 'ellipsis', 
+                          marginRight: '8px',
+                          display: 'block',
+                          flex: 1
+                        }}
+                        title={selectedFile ? selectedFile.name : ""}
+                      >
+                        {selectedFile ? selectedFile.name : "Select a guideline document (PDF, TXT, DOCX)..."}
+                      </span>
                       {selectedFile && (
                         <button 
                           type="button"
@@ -1615,7 +1629,8 @@ export default function App() {
                             cursor: 'pointer',
                             fontSize: '14px',
                             fontWeight: 'bold',
-                            padding: '0 4px'
+                            padding: '0 4px',
+                            flexShrink: 0
                           }}
                         >
                           ✕
