@@ -1589,6 +1589,7 @@ export default function App() {
                       style={{ 
                         flex: 1, 
                         minWidth: 0,
+                        width: 'auto',
                         cursor: 'pointer', 
                         display: 'flex', 
                         alignItems: 'center', 
@@ -1642,7 +1643,7 @@ export default function App() {
                       type="submit" 
                       disabled={docUploading}
                       className="action-btn"
-                      style={{ width: 'auto', padding: '8px 24px' }}
+                      style={{ width: 'auto', padding: '8px 24px', flexShrink: 0 }}
                     >
                       {docUploading ? <RefreshCw className="animate-spin" size={14} /> : <Upload size={14} />}
                       <span>Ingest Reference Guidelines</span>
