@@ -1641,14 +1641,14 @@ export default function App() {
 
                 {docFiles.length > 0 ? (
                   <div className="low-contrast-table-container">
-                    <table className="low-contrast-table">
+                    <table className="low-contrast-table" style={{ tableLayout: 'fixed', width: '100%' }}>
                       <thead>
                         <tr>
-                          <th>Guideline File name</th>
-                          <th>Database chunks generated</th>
-                          <th>Status</th>
-                          <th>Timestamp</th>
-                          <th className="no-print" style={{ textAlign: 'right' }}>Actions</th>
+                          <th style={{ width: '45%' }}>Guideline File name</th>
+                          <th style={{ width: '22%' }}>Database chunks generated</th>
+                          <th style={{ width: '13%' }}>Status</th>
+                          <th style={{ width: '12%' }}>Timestamp</th>
+                          <th className="no-print" style={{ textAlign: 'right', width: '8%' }}>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
