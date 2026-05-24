@@ -1,29 +1,28 @@
-# Python cache
+# Ignored directories
+.venv/
+venv/
+curr_books/
+node_modules/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server/.env
 __pycache__/
 *.pyc
-*.pyo
-*.pyd
-
-# Virtual environments
-venv/
-.venv/
-env/
-ENV/
-
-# Streamlit cache
-.streamlit/
-
-# Mac system files
+.pytest_cache/
+.chroma/
+db/
+dist/
+build/
 .DS_Store
+later_task_do.md
+practical_software_engineering_rules.md
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Logs
-*.log
-
-# Large data files (if not needed in repo)
-*.json
-*.csv
-*.tsv
-*.xlsx
+# Security — never commit secrets or certs
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
