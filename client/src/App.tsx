@@ -1654,10 +1654,20 @@ export default function App() {
                       <tbody>
                         {docFiles.map((doc, idx) => (
                           <tr key={idx}>
-                            <td>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <td style={{ maxWidth: '320px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
                                 <File size={14} style={{ color: 'var(--accent-color)', flexShrink: 0 }} />
-                                <strong>{doc.name}</strong>
+                                <strong 
+                                  style={{ 
+                                    whiteSpace: 'nowrap', 
+                                    overflow: 'hidden', 
+                                    textOverflow: 'ellipsis',
+                                    fontSize: '13px'
+                                  }} 
+                                  title={doc.name}
+                                >
+                                  {doc.name}
+                                </strong>
                               </div>
                             </td>
                             <td>{doc.chunks} vector chunks</td>
